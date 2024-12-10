@@ -5,24 +5,22 @@ import { personae } from "@/config/data";
 import { useState } from "react";
 
 export default function Home() {
-  const [firstPersona, setFirstPersona] = useState(personae[0]);
-  const [secondPersona, setSecondPersona] = useState(personae[1]);
-  const [currentFusion, setCurrentFusion] = useState();
+  const [firstPersona, setFirstPersona] = useState(personae[0].name);
+  const [secondPersona, setSecondPersona] = useState(personae[1].name);
   const persona1 = personae.find((persona) => {
-    return persona.name === 'Angel';
+    return persona.name === firstPersona;
   });
   const persona2 = personae.find((persona) => {
-    return persona.name === 'Izanagi';
+    return persona.name === secondPersona;
   });
-  const fusion = fuse("Magician", persona1, persona2).name;
+  const fusion = fuse("Heirophant", persona1, persona2).name;
 
 console.log(persona1, persona2, fusion)
   return (
     <div>
-      Initial
       <select 
-        defaultValue={firstPersona.name}
-        onChange={(selected) => console.log(selected.currentTarget.value)}
+        defaultValue={firstPersona}
+        onChange={(selected) => setFirstPersona(selected.currentTarget.value)}
       >
         {
           personae.map((persona) => {
@@ -37,8 +35,8 @@ console.log(persona1, persona2, fusion)
         }
       </select>
       <select 
-        defaultValue={secondPersona.name}
-        onChange={(selected) => console.log(selected.currentTarget.value)}
+        defaultValue={secondPersona}
+        onChange={(selected) => setSecondPersona(selected.currentTarget.value)}
       >
         {
           personae.map((persona) => {
@@ -52,14 +50,9 @@ console.log(persona1, persona2, fusion)
           })
         }
       </select>
-      <button 
-        className={"p-2 bg-red-400 rounded text-white"}
-        onClick={() => setCurrentFusion(fusion)}
-      >
-        Fuse
-      </button> <b>{firstPersona.name}</b> and <b>{secondPersona.name}</b>
+      <b>{firstPersona}</b> and <b>{secondPersona}</b> are fused to
       <div>
-        Current: {currentFusion}
+        {fusion}
       </div>
     </div>
   );
