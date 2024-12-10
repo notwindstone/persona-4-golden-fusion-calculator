@@ -1,26 +1,41 @@
 "use client";
 
 import { fuse } from "@/lib/fuse";
-import { personae } from "@/config/data";
+import { personae, arcana2Combos } from "@/config/data";
 import { useState } from "react";
 
 export default function Home() {
-  const [firstPersona, setFirstPersona] = useState(personae[0].name);
-  const [secondPersona, setSecondPersona] = useState(personae[1].name);
+  const [firstPersona, setFirstPersona] = useState(personae[0]);
+  const [secondPersona, setSecondPersona] = useState(personae[1]);
   const persona1 = personae.find((persona) => {
-    return persona.name === firstPersona;
+    return persona.name === firstPersona.name;
   });
   const persona2 = personae.find((persona) => {
-    return persona.name === secondPersona;
+    return persona.name === secondPersona.name;
   });
-  const fusion = fuse("Heirophant", persona1, persona2).name;
+  const arcana = (arcana2Combos.find((combo: any) => {
+    return (
+      combo.source[0] === firstPersona.arcana 
+      && combo.source[1] === secondPersona.arcana
+    ) || (
+      combo.source[0] === secondPersona.arcana
+      && combo.source[1] === firstPersona.arcana
+    );
+  }))?.result ?? '';
+  const fusion = fuse(arcana, persona1, persona2)?.name;
 
-console.log(persona1, persona2, fusion)
+console.log(arcana, persona1, persona2, fusion)
   return (
     <div>
       <select 
-        defaultValue={firstPersona}
-        onChange={(selected) => setFirstPersona(selected.currentTarget.value)}
+        defaultValue={firstPersona.name}
+        onChange={(selected) => {
+          const name = selected.currentTarget.value;
+          const selectedPersona = personae.find((persona) => {
+            return persona.name === name;
+          }) ?? personae[0];
+          setFirstPersona(selectedPersona);
+        }}
       >
         {
           personae.map((persona) => {
@@ -35,8 +50,14 @@ console.log(persona1, persona2, fusion)
         }
       </select>
       <select 
-        defaultValue={secondPersona}
-        onChange={(selected) => setSecondPersona(selected.currentTarget.value)}
+        defaultValue={secondPersona.name}
+        onChange={(selected) => {
+          const name = selected.currentTarget.value;
+          const selectedPersona = personae.find((persona) => {
+            return persona.name === name;
+          }) ?? personae[0];
+          setSecondPersona(selectedPersona);
+        }}
       >
         {
           personae.map((persona) => {
@@ -50,7 +71,7 @@ console.log(persona1, persona2, fusion)
           })
         }
       </select>
-      <b>{firstPersona}</b> and <b>{secondPersona}</b> are fused to
+      <b>{firstPersona.name}</b> and <b>{secondPersona.name}</b> are fused to
       <div>
         {fusion}
       </div>
