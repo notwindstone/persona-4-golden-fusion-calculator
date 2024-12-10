@@ -4,6 +4,8 @@ import { fuse } from "@/lib/fuse";
 import { personae, arcana2Combos } from "@/config/data";
 import { useState } from "react";
 
+const personasSorted = [...personae].sort((a, b) => a.name.localeCompare(b.name));
+
 export default function Home() {
   const [firstPersona, setFirstPersona] = useState(personae[0]);
   const [secondPersona, setSecondPersona] = useState(personae[1]);
@@ -38,9 +40,12 @@ console.log(arcana, persona1, persona2, fusion)
         }}
       >
         {
-          personae.map((persona) => {
+          personasSorted.map((persona) => {
+            const isSelected = firstPersona.name === persona.name;
+
             return (
               <option 
+                selected={isSelected}
                 key={persona.name}
               >
                 {persona.name}
@@ -60,9 +65,12 @@ console.log(arcana, persona1, persona2, fusion)
         }}
       >
         {
-          personae.map((persona) => {
+          personasSorted.map((persona) => {
+            const isSelected = secondPersona.name === persona.name;
+
             return (
               <option 
+                selected={isSelected}
                 key={persona.name}
               >
                 {persona.name}
