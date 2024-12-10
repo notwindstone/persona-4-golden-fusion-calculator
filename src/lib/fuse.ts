@@ -29,5 +29,5 @@ export function fuse(arcana: string, persona1: any, persona2: any) {
         i--;
     }
 
-    return personae;
+    return personae[i];
 }
