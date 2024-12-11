@@ -30,7 +30,7 @@ console.log(arcana, persona1, persona2, fusion)
   return (
     <div>
       <select 
-        defaultValue={firstPersona.name}
+        value={firstPersona.name}
         onChange={(selected) => {
           const name = selected.currentTarget.value;
           const selectedPersona = personae.find((persona) => {
@@ -41,11 +41,8 @@ console.log(arcana, persona1, persona2, fusion)
       >
         {
           personasSorted.map((persona) => {
-            const isSelected = firstPersona.name === persona.name;
-
             return (
               <option 
-                selected={isSelected}
                 key={persona.name}
               >
                 {persona.name}
@@ -55,7 +52,7 @@ console.log(arcana, persona1, persona2, fusion)
         }
       </select>
       <select 
-        defaultValue={secondPersona.name}
+        value={secondPersona.name}
         onChange={(selected) => {
           const name = selected.currentTarget.value;
           const selectedPersona = personae.find((persona) => {
@@ -66,11 +63,8 @@ console.log(arcana, persona1, persona2, fusion)
       >
         {
           personasSorted.map((persona) => {
-            const isSelected = secondPersona.name === persona.name;
-
             return (
               <option 
-                selected={isSelected}
                 key={persona.name}
               >
                 {persona.name}
