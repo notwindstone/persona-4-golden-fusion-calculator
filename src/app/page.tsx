@@ -3,6 +3,7 @@
 import { fuse } from "@/lib/fuse";
 import { personae, arcana2Combos } from "@/config/data";
 import { useState } from "react";
+import Link from "next/link";
 
 const personasSorted = [...personae].sort((a, b) => a.name.localeCompare(b.name));
 
@@ -26,7 +27,6 @@ export default function Home() {
   }))?.result ?? '';
   const fusion = fuse(arcana, persona1, persona2)?.name;
 
-console.log(arcana, persona1, persona2, fusion)
   return (
     <div>
       <select 
@@ -76,6 +76,28 @@ console.log(arcana, persona1, persona2, fusion)
       <b>{firstPersona.name}</b> and <b>{secondPersona.name}</b> are fused to
       <div>
         {fusion}
+      </div>
+      <div className="flex flex-col gap-4 w-64">
+        <div className="flex justify-between">
+          <p className="font-bold">Level</p>
+          <p className="font-bold">Name</p>
+          <p className="font-bold">Arcana</p>
+        </div>
+        {
+          personasSorted.map((persona) => {
+            return (
+              <div key={persona.name} className="flex justify-between">
+                <div>{persona.level}</div>
+                <div>
+                  <Link className="hover:text-blue-400" href={`/persona/${persona.name}`}>
+                    {persona.name}
+                  </Link>
+                </div>
+                <div>{persona.arcana}</div>
+              </div>
+            );
+          })
+        }
       </div>
     </div>
   );

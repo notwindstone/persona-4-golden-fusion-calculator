@@ -5,7 +5,11 @@ const Page = async ({
         name: string;
     }
 }) => {
-    return;
+    return (
+        <div>
+            {params.name}
+        </div>
+    );
 }
 
 export default Page;
